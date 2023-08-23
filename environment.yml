@@ -1,4 +1,4 @@
-name: cardiac-mechanics
+name: cardiac-mech
 channels:
   - conda-forge
   - defaults
