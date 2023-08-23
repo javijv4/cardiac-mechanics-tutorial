@@ -16,8 +16,5 @@ conda env create -f environment.yml
 Activate the environment and start a jupyter-notebook
 ```
 conda activate cardiac-mechanics
-jupyter-notebook tutorial
+jupyter-notebook tutorial.ipynb
 ```
-
-
-
