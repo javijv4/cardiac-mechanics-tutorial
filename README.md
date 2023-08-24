@@ -15,7 +15,7 @@ conda install -c conda-forge jupyter
 ```
 Now that all the packages are installed, we need to activate the environment,
 ```
-cd cardiac-mechanics-tutorial
+conda activate cardiac-mechanics
 ```
 And we proceed with cloning the repository (this will make a folder from wherever folder you are calling the command):
 ```
