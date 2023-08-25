@@ -6,7 +6,7 @@ Before start, we need to install conda or miniconda (either is fine, miniconda i
 
 Once conda is installed, we first need to create an environment by running the following,
 ```
-conda create -n cardiac-mechanics
+conda create -n cardiac-mechanics python=3.10
 ```
 here, `cardiac-mechanics` is the name of the environment. Now we need to install fenics-x and all the dependencies required to run the tutorial (basically, fenics-x and jupyter). This step might take a while depending on your system. 
 ```
