@@ -8,14 +8,11 @@ Once conda is installed, we first need to create an environment by running the f
 ```
 conda create -n cardiac-mechanics python=3.10
 ```
-here, `cardiac-mechanics` is the name of the environment. Now we need to install fenics-x and all the dependencies required to run the tutorial (basically, fenics-x and jupyter). This step might take a while depending on your system. 
-```
-conda install -c conda-forge fenics-dolfinx h5py pyvista -y
-conda install -c conda-forge jupyter
-```
-Now that all the packages are installed, we need to activate the environment,
+here, `cardiac-mechanics` is the name of the environment. Now activate the environment and install fenics-x and all the dependencies required to run the tutorial (basically, fenics-x and jupyter). This step might take a while depending on your system. 
 ```
 conda activate cardiac-mechanics
+conda install -c conda-forge fenics-dolfinx h5py pyvista -y
+conda install -c conda-forge jupyter
 ```
 And we proceed with cloning the repository (this will make a folder from wherever folder you are calling the command):
 ```
