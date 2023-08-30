@@ -116,6 +116,7 @@ dependencies:
   - jsonschema-with-format-nongpl=4.19.0=pyhd8ed1ab_1
   - jupyter=1.0.0=py310hff52083_8
   - jupyter-lsp=2.2.0=pyhd8ed1ab_0
+  - jupyter-server-proxy=4.0.0=pyhd8ed1ab_0
   - jupyter_client=8.3.1=pyhd8ed1ab_0
   - jupyter_console=6.6.3=pyhd8ed1ab_0
   - jupyter_core=5.3.1=py310hff52083_0
@@ -298,6 +299,7 @@ dependencies:
   - scotch=6.0.9=hb2e6521_2
   - send2trash=1.8.2=pyh41d4057_0
   - setuptools=68.1.2=pyhd8ed1ab_0
+  - simpervisor=1.0.0=pyhd8ed1ab_0
   - sip=6.7.11=py310hc6cd4ac_0
   - six=1.16.0=pyh6c4a22f_0
   - slepc=3.18.3=real_h900ed3e_100
