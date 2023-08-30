@@ -10,6 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dolfinx import plot, fem
 import pyvista
+pyvista.set_jupyter_backend('trame')
+pyvista.global_theme.trame.server_proxy_enabled
+pyvista.global_theme.trame.server_proxy_prefix
 
 plot_in_line = True
 
