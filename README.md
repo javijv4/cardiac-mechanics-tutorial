@@ -12,7 +12,7 @@ here, `cardiac-mechanics` is the name of the environment. Now activate the envir
 ```
 conda activate cardiac-mechanics
 conda install -c conda-forge fenics-dolfinx h5py pyvista -y
-conda install -c conda-forge jupyter
+conda install -c conda-forge jupyter -y
 ```
 And we proceed with cloning the repository (this will make a folder from wherever folder you are calling the command):
 ```
