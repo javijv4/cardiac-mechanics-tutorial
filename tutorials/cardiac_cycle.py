@@ -179,7 +179,7 @@ for i, t in enumerate(times):
     lv_activation.value = func_act(t)
 
     # Solve
-    num_its, converged = solver.solve(u)
+    num_its, converged = solver.solve(state)
 
     if not converged:
         disp_file.close()
