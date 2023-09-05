@@ -25,3 +25,7 @@ Every time you want to run the tutorial after the first time, you need to activa
 conda activate cardiac-mechanics
 jupyter-notebook tutorial.ipynb
 ```
+
+## Resources
+For more examples of how to use fenics-x, we recommend looking at this comprehensive [tutorial](https://jsdokken.com/dolfinx-tutorial/)
+The implementation shown here is loosely based on the following repositories: [fenicsx-pulse](https://github.com/finsberg/fenicsx-pulse) and [ambit](https://github.com/marchirschvogel/ambit).
