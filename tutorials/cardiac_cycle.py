@@ -91,8 +91,9 @@ P_vol = ufl.diff(Psi_vol,F)
 
 # Define active stress
 f = F*f0
+phi = ufl.tanh(3.75*(ufl.sqrt(I4f)-0.8))    # length dependent activation
 lv_activation = fem.Constant(domain, PETSc.ScalarType(0.))
-P_act = lv_activation * (ufl.outer(f,f0) + 0.2 * (F - ufl.outer(f,f0)))
+P_act = lv_activation * phi * ufl.outer(f,f0)
 
 # Boundary conditions
 # Fixed base
