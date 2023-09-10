@@ -1,5 +1,10 @@
-# cardiac-mechanics-tutorial
-A cardiac mechanics tutorial using fenics-x
+# Cardiac Mechanics Tutorial
+### Cardiac Biomechanics Lab @ UofM
+### Prof. David Nordsletten
+
+#### @author: Javiera Jilberto Vallejos (jilberto@umich.edu)
+
+This tutorial uses dolfin-x to implement the simulation of a cardiac cycle in a left ventricle.
 
 ## Getting Started
 Before starting, install conda or miniconda (either is fine, miniconda is a lightweight version of conda) following the instructions [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
@@ -40,3 +45,6 @@ In this tutorial the same setup as Tutorial 1 is used but instead of prescribing
 For more examples of how to use fenics-x, we recommend looking at this comprehensive [tutorial](https://jsdokken.com/dolfinx-tutorial/).
 
 The cardiac mechanics implementation in Tutorial 1 is loosely based on the following repositories: [fenicsx-pulse](https://github.com/finsberg/fenicsx-pulse) and [ambit](https://github.com/marchirschvogel/ambit).
+
+## Questions
+If you have any questions, feel free to reach out to jilberto@umich.edu.
