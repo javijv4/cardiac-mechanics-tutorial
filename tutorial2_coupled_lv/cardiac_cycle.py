@@ -36,7 +36,7 @@ def main():
 
     TIME_PARAMS_SOLID    = {'maxtime'               : 10.0,      # Final time. In this case is 10 sec.
                             'numstep'               : 5000,      # Solving the 10 sec using 5000 timesteps, i.e., dt=0.002
-                            'numstep_stop'          : 1000,      # If you want to stop the simulation before set this to whatever timestep you want to stop
+                            'numstep_stop'          : 5000,      # If you want to stop the simulation before set this to whatever timestep you want to stop
                             'timint'                : 'ost',     # Time integration scheme. This is the trapezoidal rule
                             'theta_ost'             : 1.0}       # Trapezoidal rule parameter. 1.0 means backward euler.
 
