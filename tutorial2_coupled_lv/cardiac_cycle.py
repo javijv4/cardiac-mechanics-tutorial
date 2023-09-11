@@ -13,7 +13,7 @@ import numpy as np
 
 def main():
     data_path = 'data'
-    out_path = 'out'
+    out_path = 'out_py'
 
     if not os.path.exists(out_path): os.mkdir(out_path)     # Make sure the output path exists
 
@@ -36,7 +36,7 @@ def main():
 
     TIME_PARAMS_SOLID    = {'maxtime'               : 10.0,      # Final time. In this case is 10 sec.
                             'numstep'               : 5000,      # Solving the 10 sec using 5000 timesteps, i.e., dt=0.002
-                            'numstep_stop'          : 500,      # If you want to stop the simulation before set this to whatever timestep you want to stop
+                            'numstep_stop'          : 1000,      # If you want to stop the simulation before set this to whatever timestep you want to stop
                             'timint'                : 'ost',     # Time integration scheme. This is the trapezoidal rule
                             'theta_ost'             : 1.0}       # Trapezoidal rule parameter. 1.0 means backward euler.
 
@@ -62,7 +62,7 @@ def main():
                             'coupling_type'         : 'monolithic_direct'}  # How is the coupled system going to be solved.
 
     MATERIALS            = {'MAT1' : {'holzapfelogden_dev' : {'a_0' : 0.4, 'b_0' : 3.2, 'a_f' : 1.0, 'b_f' : 5, 'a_s' : 0., 'b_s' : 0.1, 'a_fs' : 0., 'b_fs' : 0.1, 'fiber_comp' : False},
-                                      'active_fiber'      : {'sigma0' : 80.0, 'alpha_max' : 15.0, 'alpha_min' : -20.0, 'activation_curve' : 1, 'frankstarling' : False, 'amp_min' : 1., 'amp_max' : 1.7, 'lam_threslo' : 1.01, 'lam_maxlo' : 1.15, 'lam_threshi' : 999., 'lam_maxhi' : 9999.},
+                                      'active_fiber'      : {'sigma0' : 60.0, 'alpha_max' : 15.0, 'alpha_min' : -20.0, 'activation_curve' : 1, 'frankstarling' : False, 'amp_min' : 1., 'amp_max' : 1.7, 'lam_threslo' : 1.01, 'lam_maxlo' : 1.15, 'lam_threshi' : 999., 'lam_maxhi' : 9999.},
                                       'inertia'           : {'rho0' : 1.0e-6},
                                       'visco_green'       : {'eta' : 0.1}}}
 
