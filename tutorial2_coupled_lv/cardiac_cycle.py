@@ -13,7 +13,7 @@ import numpy as np
 
 def main():
     data_path = 'data'
-    out_path = 'out_comp'
+    out_path = 'out'
 
     if not os.path.exists(out_path): os.mkdir(out_path)     # Make sure the output path exists
 
@@ -26,24 +26,23 @@ def main():
                             # Output options
                             'output_path'           : out_path,           # Path where the results will be saved
                             'write_results_every'   : 1,                 # Saving steps every n time steps
-                            'write_restart_every'   : 100,                # This saves the simulation info such that it can be restarted
-                            'results_to_write'      : ['displacement', 'pressure', 'fibers'],  # Which results to write
+                            'results_to_write'      : ['displacement', 'pressure'],  # Which results to write
                             'simname'               : 'test'}             # Name of the simulation, all the results will have this name
 
-    SOLVER_PARAMS        = {'solve_type'            : 'direct',
-                            'tol_res'               : [1.0e-8,1.0e-8,1.0e-6],   # u, p, 0d
-                            'tol_inc'               : [1.0e-8,1.0e-8,1.0e-6]}
+    SOLVER_PARAMS        = {'solve_type'            : 'direct',          # Linear Algebra solver (direct or iterative)
+                            'tol_res'               : [1.0e-8,1.0e-8,1.0e-6],   # Residual tolerance for [displacements, pressure, 0D problem]
+                            'tol_inc'               : [1.0e-8,1.0e-8,1.0e-6],   # Increment tolerance for [displacements, pressure, 0D problem]
+                            }
 
-    TIME_PARAMS_SOLID    = {'maxtime'               : 10.0,
-                            'numstep'               : 5000,
-                            'numstep_stop'          : 5000,
-                            'timint'                : 'ost',
-                            'theta_ost'             : 1.0}
+    TIME_PARAMS_SOLID    = {'maxtime'               : 10.0,      # Final time. In this case is 10 sec.
+                            'numstep'               : 5000,      # Solving the 10 sec using 5000 timesteps, i.e., dt=0.002
+                            'numstep_stop'          : 500,      # If you want to stop the simulation before set this to whatever timestep you want to stop
+                            'timint'                : 'ost',     # Time integration scheme. This is the trapezoidal rule
+                            'theta_ost'             : 1.0}       # Trapezoidal rule parameter. 1.0 means backward euler.
 
-    TIME_PARAMS_FLOW0D   = {'timint'                : 'ost',
-                            'theta_ost'             : 1.0,
-                            'initial_conditions'    : init(),
-                            'initial_backwardeuler' : True}
+    TIME_PARAMS_FLOW0D   = {'timint'                : 'ost',      # Use trapezoidal rule
+                            'theta_ost'             : 1.0,        # Trapezoidal rule parameter. 1.0 means backward euler.
+                            'initial_conditions'    : init()}     # Initial conditions of the 0D problem
 
     MODEL_PARAMS_FLOW0D  = {'modeltype'             : 'syspul',
                             'parameters'            : param(),
@@ -52,21 +51,21 @@ def main():
                                                        'la' : {'type' : '0D_elast', 'activation_curve' : 2},
                                                        'ra' : {'type' : '0D_elast', 'activation_curve' : 2}}}
 
-    FEM_PARAMS           = {'order_disp'            : 2,
+    FEM_PARAMS           = {'order_disp'            : 1,
                             'order_pres'            : 1,
-                            'quad_degree'           : 4,
-                            'incompressible_2field' : True}
+                            'quad_degree'           : 4,       # Quadrature degree
+                            'incompressible_2field' : True}    # If using or not the pressure field
 
     COUPLING_PARAMS      = {'surface_ids'           : [[3]],
                             'surface_p_ids'         : [[3]],
-                            'coupling_quantity'     : ['flux'],
-                            'coupling_type'         : 'monolithic_direct'}
+                            'coupling_quantity'     : ['flux'],             # The change in volume (flux) will be the coupling quantity
+                            'coupling_type'         : 'monolithic_direct'}  # How is the coupled system going to be solved.
 
     MATERIALS            = {'MAT1' : {'holzapfelogden_dev' : {'a_0' : 0.4, 'b_0' : 3.2, 'a_f' : 1.0, 'b_f' : 5, 'a_s' : 0., 'b_s' : 0.1, 'a_fs' : 0., 'b_fs' : 0.1, 'fiber_comp' : False},
-                                      # 'active_fiber'      : {'sigma0' : 100.0, 'prescribed_curve': 1},
                                       'active_fiber'      : {'sigma0' : 80.0, 'alpha_max' : 15.0, 'alpha_min' : -20.0, 'activation_curve' : 1, 'frankstarling' : False, 'amp_min' : 1., 'amp_max' : 1.7, 'lam_threslo' : 1.01, 'lam_maxlo' : 1.15, 'lam_threshi' : 999., 'lam_maxhi' : 9999.},
                                       'inertia'           : {'rho0' : 1.0e-6},
                                       'visco_green'       : {'eta' : 0.1}}}
+
 
 
     # Read data for activation and define a function to evaluate it.
@@ -77,13 +76,7 @@ def main():
 
     # Define atrial and ventricle activation curves
     class time_curves():
-
-        # def tc1(self, t):  # ventricle activation
-        #     t_contr = 0.2
-        #     tven = np.max([0, t-t_contr])
-        #     return func_act(tven)*0.4
-
-        def tc1(self, t):
+        def tc1(self, t): # ventricle activation
             K = 5.
             t_contr, t_relax = 0.139, 0.535
             alpha_max = MATERIALS['MAT1']['active_fiber']['alpha_max']
@@ -122,27 +115,23 @@ def main():
 # syspulcap circulation model initial condition and parameter dicts...
 
 def init():
-
-    factor_kPa_mmHg = 7.500615
-
-    return {'q_vin_l_0' : 0.0,
-            'p_at_l_0' : 1.213325556608718,
-            'q_vout_l_0' : 0.0,
-            'p_v_l_0' : 10.0/factor_kPa_mmHg,
+    return {'p_at_l_0' : 1.213325556608718,
             'p_ar_sys_0' : 9.15625635011591,
-            'q_ar_sys_0' : 0.0,
-            'Q_v_l_0' : 0.0,
-            'p_ven_sys_0' : 17.0/factor_kPa_mmHg,
-            'q_ven_sys_0' : 1.8954654756677949,
-            'q_vin_r_0' : 0.0,
+            'p_ven_sys_0' : 1.8954654756677949,
             'p_at_r_0' : 0.5026616990281122,
-            'q_vout_r_0' : 0.0,
             'p_v_r_0' : 0.4470328846734767,
             'p_ar_pul_0' : 1.735368268177882,
-            'q_ar_pul_0' : 0.0,
-            'q_cap_pul_0' : 0.0,
             'p_ven_pul_0' : 1.5577155509540659,
-            'q_ven_pul_0' : 0.0}
+            'q_vin_l_0' : 0.,
+            'q_vout_l_0' : 0.,
+            'q_ar_sys_0' : 0.,
+            'q_ar_pul_0' : 0.,
+            'q_ven_sys_0' : 0.,
+            'q_ven_pul_0' : 0.,
+            'q_vin_r_0' : 0.,
+            'q_vout_r_0' : 0.,
+            'p_v_l_0' : 0.,
+            }
 
 
 
@@ -158,7 +147,7 @@ def param():
             'R_ven_sys' : 1.8260869565217376e-05,
             'C_ven_sys' : 369642.8571428571,
             'L_ven_sys' : 1e-08,
-            'R_ven_pul' : 6.299999999999999e-0,
+            'R_ven_pul' : 6.299999999999999e-06,
             'C_ven_pul' : 49285.71428571428,
             'L_ven_pul' : 1e-08,
             # atrial elastances
